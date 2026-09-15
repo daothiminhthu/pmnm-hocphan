@@ -18,3 +18,9 @@ Tôi hiện đang thực tập tại FPT Telecom với vai trò xây dựng work
 | Node.js | MIT License |
 | Git | GPL v2 |
 | PostgreSQL | PostgreSQL License |
+
+## Giấy phép
+
+Mã nguồn trong kho này được phát hành theo [Giấy phép MIT](LICENSE).
+
+SPDX-License-Identifier: MIT
