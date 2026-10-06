@@ -1,4 +1,5 @@
-from flask import Flask, request, url_for
+from flask import Flask, request, url_for, redirect, make_response
+import html
 
 app = Flask(__name__)
 
@@ -406,21 +407,63 @@ def index():
 
         <div class="menu">
 
-            <a class="btn"
-               href="{url_for('student_list')}">
+    <a class="btn"
+       href="{url_for('student_list')}">
 
-                Danh sách sinh viên
+        Danh sách sinh viên
 
-            </a>
+    </a>
 
-            <a class="btn btn-light"
-               href="{url_for('api_students')}">
+    <a class="btn btn-light"
+       href="{url_for('api_students')}">
 
-                API sinh viên
+        API sinh viên
 
-            </a>
+    </a>
 
-        </div>
+</div>
+
+
+<div class="box" style="margin-top: 25px;">
+
+    <h2>Các chức năng</h2>
+
+    <div class="menu">
+
+        <a class="btn"
+           href="{url_for('student_detail', mssv='23T1020001')}">
+
+            Câu 3 - Chi tiết sinh viên
+
+        </a>
+
+
+        <a class="btn"
+           href="{url_for('student_shortcut', mssv='23T1020001')}">
+
+            Câu 4 - Link rút gọn
+
+        </a>
+
+
+        <a class="btn"
+           href="{url_for('export_scores', mssv='23T1020001')}">
+
+            Câu 5 - Tải CSV
+
+        </a>
+
+
+        <a class="btn"
+           href="{url_for('search')}">
+
+            Câu 6 - Tìm kiếm
+
+        </a>
+
+    </div>
+
+</div>
 
     </div>
 
@@ -838,7 +881,9 @@ def student_detail(mssv):
             </div>
 
             <div class="detail-value">
-                {student["lop"]}
+                <a href="{url_for('student_list', lop=student['lop'])}">
+                    {student["lop"]}
+                </a>
             </div>
 
 
@@ -891,6 +936,13 @@ def student_detail(mssv):
 
         <div class="menu">
 
+            <a class="btn"
+                href="{url_for('export_scores', mssv=mssv)}">
+
+                    📥 Tải bảng điểm (CSV)
+
+            </a>
+
             <a class="btn btn-light"
                href="{url_for('student_list')}">
 
@@ -909,6 +961,13 @@ def student_detail(mssv):
 </html>
 """
 
+# CÂU 4 - LINK RÚT GỌN
+@app.route("/sv/<mssv>")
+def student_shortcut(mssv):
+    return redirect(
+        url_for("student_detail", mssv=mssv),
+        code=301
+    )
 
 
 @app.route("/api/students")
@@ -941,6 +1000,194 @@ def api_students():
 
     return result
 
+@app.route("/students/<mssv>/export")
+def export_scores(mssv):
+    student = STUDENTS.get(mssv)
+
+    # MSSV không tồn tại
+    if student is None:
+        return "MSSV không tồn tại", 404
+
+    # Tạo nội dung CSV
+    csv_content = "hoc_phan,diem\n"
+
+    for subject, score in student["scores"].items():
+        csv_content += f"{subject},{score}\n"
+
+    # Tạo response để tải file
+    response = make_response(csv_content)
+
+    response.headers["Content-Type"] = "text/csv; charset=utf-8"
+    response.headers["Content-Disposition"] = (
+        f"attachment; filename=diem_{mssv}.csv"
+    )
+
+    return response
+
+# CÂU 6 - TÌM KIẾM AN TOÀN
+@app.route("/search")
+def search():
+    q = request.args.get("q", "").strip()
+
+    results = []
+
+    if q:
+        keyword = q.lower()
+
+        for mssv, student in STUDENTS.items():
+            if (
+                keyword in mssv.lower()
+                or keyword in student["name"].lower()
+            ):
+                results.append((mssv, student))
+
+    # Escape từ khóa để chống XSS
+    safe_q = html.escape(q)
+
+    rows = ""
+
+    for mssv, student in results:
+        rows += f"""
+        <tr>
+            <td>
+                <a href="{url_for('student_detail', mssv=mssv)}">
+                    {html.escape(mssv)}
+                </a>
+            </td>
+
+            <td>
+                {html.escape(student["name"])}
+            </td>
+
+            <td>
+                <span class="badge">
+                    {html.escape(student["lop"])}
+                </span>
+            </td>
+        </tr>
+        """
+
+    if not results:
+        rows = """
+        <tr>
+            <td colspan="3" class="empty">
+                Không tìm thấy sinh viên phù hợp.
+            </td>
+        </tr>
+        """
+
+    return f"""
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Tìm kiếm sinh viên</title>
+
+    {STYLE}
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>🔎 Tìm kiếm sinh viên</h1>
+
+        <p>
+            Tìm theo họ tên hoặc MSSV
+        </p>
+
+    </div>
+
+
+    <div class="box">
+
+        <form method="GET" action="{url_for('search')}">
+
+            <input
+                type="text"
+                name="q"
+                value="{safe_q}"
+                placeholder="Nhập họ tên hoặc MSSV..."
+                style="padding: 10px; width: 70%; border: 1px solid #ddd; border-radius: 8px;"
+            >
+
+            <button
+                type="submit"
+                class="btn"
+                style="border: none; cursor: pointer;"
+            >
+                Tìm kiếm
+            </button>
+
+        </form>
+
+
+        <h2 style="margin-top: 25px;">
+            Tìm thấy {len(results)} kết quả cho "{safe_q}"
+        </h2>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>MSSV</th>
+                        <th>Họ tên</th>
+                        <th>Lớp</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {rows}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="menu">
+
+            <a class="btn btn-light"
+               href="{url_for('index')}">
+
+                ← Trang chủ
+
+            </a>
+
+            <a class="btn btn-light"
+               href="{url_for('student_list')}">
+
+                Danh sách sinh viên
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+"""
 
 if __name__ == "__main__":
 
