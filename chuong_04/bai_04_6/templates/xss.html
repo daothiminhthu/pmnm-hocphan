@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực hành XSS với Jinja2</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            color: #273247;
+            padding: 35px 18px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #5266d8, #8196f0);
+            color: white;
+            padding: 26px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+        }
+
+        .header h1 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #eef0ff;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 23px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 16px #26365a0b;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 9px;
+        }
+
+        .description {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #7b859a;
+            margin-bottom: 17px;
+        }
+
+        .result {
+            padding: 16px;
+            border-radius: 9px;
+            background: #f5f6fb;
+            border: 1px solid #e8ebf4;
+            overflow-wrap: anywhere;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .safe-result {
+            background: #effaf3;
+            border-color: #d4efdf;
+        }
+
+        .label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .label-blue {
+            color: #5266d8;
+            background: #edf0ff;
+        }
+
+        .label-green {
+            color: #16834d;
+            background: #ddf5e6;
+        }
+
+        .warning {
+            background: #fff5e5;
+            color: #8c641d;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        code {
+            background: #edf0f7;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #939caf;
+            font-size: 12px;
+            margin-top: 22px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header, .card {
+                padding: 18px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tìm hiểu XSS và Jinja2</h1>
+            <p>
+                Thử nghiệm cơ chế tự động escape và cách hiển thị HTML
+                trong template Flask.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>1. Tự động escape</h2>
+            <p class="description">
+                Jinja2 tự động chuyển các ký tự HTML đặc biệt thành dạng
+                an toàn khi hiển thị dữ liệu trong template HTML.
+            </p>
+
+            <span class="label label-blue">Mặc định an toàn</span>
+
+            <div class="result">
+                {{ content }}
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2. Hiển thị HTML bằng safe</h2>
+            <p class="description">
+                Filter safe yêu cầu Jinja2 không escape nội dung.
+                Chỉ sử dụng với HTML đáng tin cậy.
+            </p>
+
+            <span class="label label-green">HTML được hiển thị</span>
+
+            <div class="result safe-result">
+                {{ html_content | safe }}
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠ Lưu ý bảo mật:</strong>
+            Không sử dụng <code>|safe</code> với dữ liệu người dùng chưa
+            được kiểm tra hoặc làm sạch. Điều này có thể tạo lỗ hổng XSS,
+            khiến trình duyệt thực thi mã độc.
+        </div>
+
+        <div class="footer">
+            Bài thực hành Flask và Jinja2 · Tự động escape và XSS
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ ho_ten }}</title>
+</head>
+<body>
+    <h1>{{ ho_ten }}</h1>
+
+    <p>Năm sinh: {{ nam_sinh }}</p>
+    <p>Tuổi: {{ 2026 - nam_sinh }}</p>
+    <p>Ngành học: {{ nganh }}</p>
+
+    <h2>Kỹ năng</h2>
+    <ul>
+        {% for ky_nang in ky_nang %}
+            <li>{{ ky_nang }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

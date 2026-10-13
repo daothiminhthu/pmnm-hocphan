@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+
+{% block title %}Liên hệ{% endblock %}
+
+{% block content %}
+<h1 class="h3 fw-bold mb-4">Liên hệ với mình</h1>
+
+<div class="content-card">
+    <p class="text-secondary">
+        Bạn có thể liên hệ với mình qua thông tin bên dưới.
+    </p>
+
+    <div class="border rounded-3 p-3 mb-3">
+        <div class="text-secondary small mb-1">Họ và tên</div>
+        <strong>{{ ho_ten }}</strong>
+    </div>
+
+    <div class="border rounded-3 p-3">
+        <div class="text-secondary small mb-1">Email</div>
+        <a href="mailto:{{ email }}" class="text-decoration-none">
+            {{ email }}
+        </a>
+    </div>
+</div>
+{% endblock %}

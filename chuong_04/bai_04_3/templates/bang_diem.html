@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng điểm sinh viên</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f6fb;
+            color: #202945;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #5b5de6, #8585ff);
+            color: white;
+            padding: 32px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 12px 30px #5b5de622;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #ededff;
+            font-size: 15px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 23px;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px #20294508;
+        }
+
+        .stat-card p {
+            color: #7b849b;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h2 {
+            font-size: 28px;
+            color: #5b5de6;
+        }
+
+        .table-card {
+            background: white;
+            padding: 26px;
+            border-radius: 18px;
+            box-shadow: 0 4px 18px #20294508;
+            overflow-x: auto;
+        }
+
+        .table-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .table-title h2 {
+            font-size: 20px;
+        }
+
+        .table-title span {
+            color: #7b849b;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 560px;
+        }
+
+        th {
+            background: #f5f6ff;
+            color: #707995;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        th, td {
+            padding: 17px 15px;
+            text-align: left;
+            border-bottom: 1px solid #edf0f7;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: #fafaff;
+        }
+
+        .number {
+            color: #858ba0;
+            width: 65px;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: #293451;
+        }
+
+        .score {
+            font-weight: 700;
+            color: #5b5de6;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .dat {
+            color: #16865b;
+            background: #e3f8ed;
+        }
+
+        .khong-dat {
+            color: #d34555;
+            background: #ffeaed;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #858ba0;
+        }
+
+        .average {
+            margin-top: 22px;
+            padding: 20px;
+            border-radius: 14px;
+            background: #f5f6ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .average p {
+            color: #626d88;
+        }
+
+        .average strong {
+            color: #5b5de6;
+            font-size: 25px;
+        }
+
+        footer {
+            text-align: center;
+            color: #9aa1b4;
+            font-size: 13px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .header {
+                padding: 24px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 18px;
+            }
+
+            .table-card {
+                padding: 18px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <header class="header">
+        <h1>Bảng điểm sinh viên</h1>
+        <p>Theo dõi kết quả học tập và đánh giá thành tích sinh viên</p>
+    </header>
+
+    {% set so_luong = sinh_vien | length %}
+    {% set tong_diem = sinh_vien | sum(attribute='diem') %}
+    {% set diem_tb = tong_diem / so_luong if so_luong > 0 else 0 %}
+    {% set so_dat = sinh_vien | selectattr('diem', 'ge', 5) | list | length %}
+
+    <section class="stats">
+        <div class="stat-card">
+            <p>Tổng sinh viên</p>
+            <h2>{{ so_luong }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Sinh viên đạt</p>
+            <h2>{{ so_dat }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Điểm trung bình</p>
+            <h2>{{ "%.2f"|format(diem_tb) }}</h2>
+        </div>
+    </section>
+
+    <section class="table-card">
+        <div class="table-title">
+            <h2>Danh sách kết quả</h2>
+            <span>Năm học 2026–2027</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ và tên</th>
+                    <th>Điểm số</th>
+                    <th>Kết quả</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for sv in sinh_vien %}
+                <tr>
+                    <td class="number">{{ loop.index }}</td>
+                    <td class="student-name">{{ sv.ho_ten }}</td>
+                    <td class="score">{{ "%.1f"|format(sv.diem) }}</td>
+                    <td>
+                        {% if sv.diem >= 5 %}
+                            <span class="badge dat">✓ Đạt</span>
+                        {% else %}
+                            <span class="badge khong-dat">✕ Không đạt</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="empty">
+                        Chưa có dữ liệu sinh viên.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="average">
+            <p>Điểm trung bình toàn lớp</p>
+            <strong>{{ "%.2f"|format(diem_tb) }}</strong>
+        </div>
+    </section>
+
+    <footer>
+        Hệ thống quản lý học tập · Flask &amp; Jinja2
+    </footer>
+
+</div>
+</body>
+</html>

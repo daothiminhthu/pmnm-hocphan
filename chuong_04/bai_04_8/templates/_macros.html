@@ -1,0 +1,15 @@
+{% macro the_du_an(du_an, hien_cong_nghe=True) %}
+<div class="card h-100 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title">{{ du_an.ten }}</h5>
+
+        <p class="card-text">{{ du_an.mo_ta }}</p>
+
+        {% if hien_cong_nghe %}
+        <span class="badge bg-primary">
+            {{ du_an.cong_nghe }}
+        </span>
+        {% endif %}
+    </div>
+</div>
+{% endmacro %}

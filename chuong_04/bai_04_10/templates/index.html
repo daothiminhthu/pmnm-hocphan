@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Giới thiệu khoa</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="header">
+        <img src="{{ url_for('static', filename='img/logo.svg') }}"
+             alt="Logo khoa">
+
+        <div>
+            <h1>Khoa Công nghệ Thông tin</h1>
+            <p>Trường Đại học Khoa học, Đại học Huế</p>
+        </div>
+    </header>
+
+    <main class="content">
+        <h2>Chào mừng bạn!</h2>
+        <p>
+            Đây là trang giới thiệu sử dụng Flask, HTML và CSS riêng.
+        </p>
+        <p>
+            Logo và giao diện được tải từ thư mục static.
+        </p>
+    </main>
+
+    <footer class="footer">
+        © 2026 - Khoa Công nghệ Thông tin
+    </footer>
+
+</body>
+</html>

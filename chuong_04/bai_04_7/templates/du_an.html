@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dự án{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        .project-card {
+            border-left: 4px solid #5266d8;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px #26365a12;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: #edf0ff;
+            color: #5266d8;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<h1 class="h3 fw-bold mb-2">Dự án của mình</h1>
+<p class="text-secondary mb-4">
+    Một số sản phẩm đã và đang thực hiện.
+</p>
+
+<div class="row g-4">
+    {% for item in du_an %}
+    <div class="col-md-6">
+        <div class="content-card project-card">
+            <h2 class="h5 fw-bold">{{ item.ten }}</h2>
+            <p class="text-secondary">{{ item.mo_ta }}</p>
+            <span class="tech-tag">{{ item.cong_nghe }}</span>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="content-card text-secondary">
+            Chưa có dự án nào.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

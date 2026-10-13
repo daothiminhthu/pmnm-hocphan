@@ -1,0 +1,8 @@
+{% macro render_menu(menu) %}
+    {% for item in menu %}
+    <a class="nav-link {{ is_active(item.endpoint) }}"
+       href="{{ url_for(item.endpoint) }}">
+        {{ item.label }}
+    </a>
+    {% endfor %}
+{% endmacro %}

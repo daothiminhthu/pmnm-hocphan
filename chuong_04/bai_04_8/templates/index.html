@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "_macros.html" import the_du_an %}
+
+{% block title %}Giới thiệu{% endblock %}
+
+{% block content %}
+<div class="p-4 p-md-5 mb-4 bg-white rounded-3 shadow-sm">
+    <h1 class="fw-bold">Xin chào, mình là {{ ho_ten }}!</h1>
+    <p class="text-secondary mb-0">
+        Chào mừng bạn đến với website cá nhân của mình.
+    </p>
+</div>
+
+<h2 class="mb-3">Các dự án của mình</h2>
+
+<div class="row g-3">
+    {% for du_an_item in du_an %}
+    <div class="col-md-4">
+        {{ the_du_an(du_an_item) }}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
