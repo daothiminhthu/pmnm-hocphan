@@ -1,0 +1,185 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    color: #243247;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.card {
+    width: 100%;
+    max-width: 520px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(30, 50, 80, 0.1);
+}
+
+.heading {
+    margin-bottom: 24px;
+}
+
+.subtitle,
+.result-label {
+    color: #16845b;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+h1 {
+    margin: 12px 0 8px;
+    font-size: 29px;
+}
+
+.heading p {
+    color: #6b7788;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.weights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 26px;
+}
+
+.weights div {
+    padding: 14px 6px;
+    border-radius: 10px;
+    background: #effaf4;
+    text-align: center;
+}
+
+.weights strong,
+.weights span {
+    display: block;
+}
+
+.weights strong {
+    color: #16845b;
+    font-size: 20px;
+}
+
+.weights span {
+    margin-top: 5px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.form-group {
+    margin-bottom: 19px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d5dce5;
+    border-radius: 9px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #16845b;
+    box-shadow: 0 0 0 3px rgba(22, 132, 91, 0.1);
+}
+
+.error {
+    display: block;
+    margin-top: 7px;
+    color: #d93025;
+    font-size: 13px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: #16845b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #106b49;
+}
+
+.result {
+    margin-top: 25px;
+    padding: 22px;
+    border: 1px solid #b9e5d0;
+    border-radius: 12px;
+    background: #effaf4;
+    text-align: center;
+}
+
+.score {
+    margin: 12px 0;
+    color: #16845b;
+    font-size: 46px;
+    font-weight: bold;
+}
+
+.classification {
+    font-size: 15px;
+}
+
+.grade {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: #16845b;
+    color: white;
+}
+
+.grade-F {
+    background: #d93025;
+}
+
+.warning {
+    margin: 15px 0 0;
+    color: #d93025;
+    font-size: 13px;
+}
+
+footer {
+    margin-top: 26px;
+    color: #8792a2;
+    text-align: center;
+    font-size: 12px;
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+}

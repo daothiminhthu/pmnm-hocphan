@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính điểm học phần</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <section class="card">
+            <header class="heading">
+                <span class="subtitle">CHƯƠNG 5 · FORM VÀ XỬ LÝ DỮ LIỆU</span>
+                <h1>Tính điểm học phần</h1>
+                <p>Nhập điểm chuyên cần, giữa kỳ và cuối kỳ để tính kết quả.</p>
+            </header>
+
+            <div class="weights">
+                <div>
+                    <strong>10%</strong>
+                    <span>Chuyên cần</span>
+                </div>
+                <div>
+                    <strong>30%</strong>
+                    <span>Giữa kỳ</span>
+                </div>
+                <div>
+                    <strong>60%</strong>
+                    <span>Cuối kỳ</span>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ url_for('tinh_diem') }}">
+                <div class="form-group">
+                    <label for="cc">Điểm chuyên cần (CC)</label>
+                    <input
+                        type="text"
+                        id="cc"
+                        name="cc"
+                        value="{{ cc }}"
+                        placeholder="Nhập điểm từ 0 đến 10"
+                    >
+                    {% if loi_cc %}
+                        <small class="error">{{ loi_cc }}</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="gk">Điểm giữa kỳ (GK)</label>
+                    <input
+                        type="text"
+                        id="gk"
+                        name="gk"
+                        value="{{ gk }}"
+                        placeholder="Nhập điểm từ 0 đến 10"
+                    >
+                    {% if loi_gk %}
+                        <small class="error">{{ loi_gk }}</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="ck">Điểm cuối kỳ (CK)</label>
+                    <input
+                        type="text"
+                        id="ck"
+                        name="ck"
+                        value="{{ ck }}"
+                        placeholder="Nhập điểm từ 0 đến 10"
+                    >
+                    {% if loi_ck %}
+                        <small class="error">{{ loi_ck }}</small>
+                    {% endif %}
+                </div>
+
+                <button type="submit">Tính điểm</button>
+            </form>
+
+            {% if diem_hp is not none %}
+                <section class="result">
+                    <span class="result-label">KẾT QUẢ HỌC PHẦN</span>
+
+                    <div class="score">{{ "%.1f"|format(diem_hp) }}</div>
+
+                    <div class="classification">
+                        Xếp loại:
+                        <strong class="grade grade-{{ xep_loai }}">
+                            {{ xep_loai }}
+                        </strong>
+                    </div>
+
+                    {% if ck|float < 1 %}
+                        <p class="warning">
+                            Điểm cuối kỳ dưới 1: bạn bị điểm liệt.
+                        </p>
+                    {% endif %}
+                </section>
+            {% endif %}
+
+            <footer>
+                Bài thực hành Flask · Chương 5
+            </footer>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy tính cơ bản</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <section class="calculator">
+            <div class="heading">
+                <span class="label">CHƯƠNG 5 · FORM VÀ XỬ LÝ DỮ LIỆU</span>
+                <h1>Máy tính cơ bản</h1>
+                <p>Nhập hai số và chọn phép toán bạn muốn thực hiện.</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('may_tinh') }}">
+                <div class="form-group">
+                    <label for="a">Số thứ nhất (a)</label>
+                    <input
+                        type="text"
+                        id="a"
+                        name="a"
+                        value="{{ a }}"
+                        placeholder="Ví dụ: 7 hoặc 2,5"
+                    >
+                    {% if loi_a %}
+                        <small class="error">{{ loi_a }}</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="op">Phép toán</label>
+                    <select id="op" name="op">
+                        <option value="+" {% if op == '+' %}selected{% endif %}>Cộng (+)</option>
+                        <option value="-" {% if op == '-' %}selected{% endif %}>Trừ (-)</option>
+                        <option value="*" {% if op == '*' %}selected{% endif %}>Nhân (*)</option>
+                        <option value="/" {% if op == '/' %}selected{% endif %}>Chia (/)</option>
+                    </select>
+                    {% if loi_op %}
+                        <small class="error">{{ loi_op }}</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="b">Số thứ hai (b)</label>
+                    <input
+                        type="text"
+                        id="b"
+                        name="b"
+                        value="{{ b }}"
+                        placeholder="Ví dụ: 2 hoặc 4"
+                    >
+                    {% if loi_b %}
+                        <small class="error">{{ loi_b }}</small>
+                    {% endif %}
+                </div>
+
+                <button type="submit">Tính kết quả</button>
+            </form>
+
+            {% if ket_qua is not none %}
+                <section class="result">
+                    <span class="result-label">KẾT QUẢ</span>
+                    <p>{{ a }} {{ op }} {{ b }} = <strong>{{ ket_qua }}</strong></p>
+                </section>
+            {% endif %}
+
+            <footer>
+                Bài thực hành Flask · Chương 5
+            </footer>
+        </section>
+    </main>
+</body>
+</html>

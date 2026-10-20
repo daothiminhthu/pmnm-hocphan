@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    color: #243247;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.calculator {
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(30, 50, 80, 0.1);
+}
+
+.heading {
+    margin-bottom: 28px;
+}
+
+.label,
+.result-label {
+    color: #16845b;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+h1 {
+    margin: 12px 0 8px;
+    font-size: 30px;
+}
+
+.heading p {
+    margin: 0;
+    color: #6b7788;
+    line-height: 1.6;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d5dce5;
+    border-radius: 9px;
+    background: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #16845b;
+    box-shadow: 0 0 0 3px rgba(22, 132, 91, 0.1);
+}
+
+.error {
+    display: block;
+    margin-top: 7px;
+    color: #d93025;
+    font-size: 13px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: #16845b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #106b49;
+}
+
+.result {
+    margin-top: 24px;
+    padding: 18px;
+    border: 1px solid #b9e5d0;
+    border-radius: 10px;
+    background: #effaf4;
+}
+
+.result p {
+    margin: 10px 0 0;
+    overflow-wrap: anywhere;
+    font-size: 17px;
+}
+
+.result strong {
+    color: #16845b;
+    font-size: 22px;
+}
+
+footer {
+    margin-top: 28px;
+    color: #8792a2;
+    text-align: center;
+    font-size: 12px;
+}
+
+@media (max-width: 480px) {
+    .calculator {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+}
