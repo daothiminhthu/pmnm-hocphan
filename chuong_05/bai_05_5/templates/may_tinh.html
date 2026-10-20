@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Máy tính | CalcSpace{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">TOOL 01 / CALCULATOR</span>
+    <h1>Máy tính <span>cơ bản</span></h1>
+    <p>Nhập hai số, chọn phép toán và xem kết quả ngay bên dưới.</p>
+</section>
+
+<section class="workspace">
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="tool-icon purple">＋</div>
+            <div><h2>Phép tính mới</h2><p>Hỗ trợ số nguyên và số thập phân</p></div>
+        </div>
+
+        <form method="POST">
+            <div class="field">
+                <label for="a">SỐ THỨ NHẤT</label>
+                <input id="a" name="a" value="{{ a }}" placeholder="Ví dụ: 12,5">
+                {% if loi_a %}<small class="error">{{ loi_a }}</small>{% endif %}
+            </div>
+
+            <div class="field">
+                <label>PHÉP TOÁN</label>
+                <div class="operator-grid">
+                    {% for ky_hieu in ['+', '-', '*', '/'] %}
+                    <label class="operator-option">
+                        <input type="radio" name="op" value="{{ ky_hieu }}"
+                               {% if op == ky_hieu %}checked{% endif %}>
+                        <span>{% if ky_hieu == '*' %}×{% elif ky_hieu == '/' %}÷{% else %}{{ ky_hieu }}{% endif %}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                {% if loi_op %}<small class="error">{{ loi_op }}</small>{% endif %}
+            </div>
+
+            <div class="field">
+                <label for="b">SỐ THỨ HAI</label>
+                <input id="b" name="b" value="{{ b }}" placeholder="Ví dụ: 3">
+                {% if loi_b %}<small class="error">{{ loi_b }}</small>{% endif %}
+            </div>
+
+            <button class="btn btn-primary btn-full" type="submit">
+                Tính kết quả <span>→</span>
+            </button>
+        </form>
+    </div>
+
+    <aside class="result-panel">
+        <span class="eyebrow">KẾT QUẢ</span>
+        {% if ket_qua is not none %}
+            <div class="result-equation">{{ a }} {{ '×' if op == '*' else '÷' if op == '/' else op }} {{ b }} =</div>
+            <div class="big-result">{{ "{:g}".format(ket_qua) }}</div>
+            <div class="status-pill success">✓ Tính toán thành công</div>
+        {% else %}
+            <div class="empty-symbol">∑</div>
+            <h3>Chờ phép tính của bạn</h3>
+            <p>Kết quả sẽ xuất hiện tại đây sau khi bạn nhấn nút tính.</p>
+        {% endif %}
+        <div class="result-hint">MẸO <span>•</span> Dùng dấu phẩy hoặc dấu chấm cho số thập phân.</div>
+    </aside>
+</section>
+{% endblock %}

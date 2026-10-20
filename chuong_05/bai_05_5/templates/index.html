@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Tổng quan | CalcSpace{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> WORKSPACE CỦA BẠN</span>
+        <h1>Mọi phép tính.<br><span>Một không gian.</span></h1>
+        <p>Bộ công cụ nhỏ gọn giúp bạn tính toán, kiểm tra điểm số
+           và theo dõi chỉ số BMI trong cùng một website.</p>
+        <a href="{{ url_for('may_tinh') }}" class="btn btn-primary">
+            Bắt đầu sử dụng <span>↗</span>
+        </a>
+    </div>
+    <div class="hero-art">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="hero-symbol">∑</div>
+        <div class="float-card float-top">✳ <span>Simple tools</span></div>
+        <div class="float-card float-bottom"><span class="green-dot"></span> Ready to calculate</div>
+    </div>
+</section>
+
+<div class="section-heading">
+    <div>
+        <span class="eyebrow">YOUR TOOLKIT</span>
+        <h2>Chọn công cụ</h2>
+    </div>
+    <span class="muted">03 công cụ khả dụng</span>
+</div>
+
+<section class="tool-grid">
+    <a class="tool-card" href="{{ url_for('may_tinh') }}">
+        <div class="tool-icon purple">＋</div>
+        <span class="tool-number">01 / CALCULATOR</span>
+        <h3>Máy tính cơ bản</h3>
+        <p>Thực hiện phép cộng, trừ, nhân và chia với kiểm tra dữ liệu đầu vào.</p>
+        <span class="tool-link">Mở công cụ <b>↗</b></span>
+    </a>
+
+    <a class="tool-card" href="{{ url_for('tinh_diem') }}">
+        <div class="tool-icon orange">▤</div>
+        <span class="tool-number">02 / GRADE</span>
+        <h3>Tính điểm học phần</h3>
+        <p>Tính điểm tổng kết theo tỷ trọng và xác định xếp loại chữ.</p>
+        <span class="tool-link">Mở công cụ <b>↗</b></span>
+    </a>
+
+    <a class="tool-card" href="{{ url_for('bmi') }}">
+        <div class="tool-icon teal">⌁</div>
+        <span class="tool-number">03 / WELLNESS</span>
+        <h3>Chỉ số BMI</h3>
+        <p>Tính BMI từ chiều cao, cân nặng và xem phân loại tương ứng.</p>
+        <span class="tool-link">Mở công cụ <b>↗</b></span>
+    </a>
+</section>
+
+<div class="note-strip">
+    <span class="note-icon">✦</span>
+    <div>
+        <strong>Một giao diện, ba tiện ích</strong>
+        <p>Các trang sử dụng chung layout và thanh điều hướng bằng Jinja2.</p>
+    </div>
+</div>
+{% endblock %}

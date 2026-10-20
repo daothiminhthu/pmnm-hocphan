@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Chỉ số BMI | CalcSpace{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">TOOL 03 / BODY MASS INDEX</span>
+    <h1>Chỉ số <span>BMI</span></h1>
+    <p>Tính chỉ số khối cơ thể từ chiều cao và cân nặng của bạn.</p>
+</section>
+
+<section class="workspace">
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="tool-icon teal">⌁</div>
+            <div><h2>Thông số cơ thể</h2><p>Chiều cao cm · Cân nặng kg</p></div>
+        </div>
+
+        <form method="POST">
+            <div class="field">
+                <label for="chieu_cao">CHIỀU CAO (CM)</label>
+                <div class="input-with-unit">
+                    <input id="chieu_cao" name="chieu_cao" value="{{ chieu_cao }}" placeholder="Ví dụ: 170">
+                    <span>cm</span>
+                </div>
+                {% if loi_chieu_cao %}<small class="error">{{ loi_chieu_cao }}</small>{% endif %}
+            </div>
+            <div class="field">
+                <label for="can_nang">CÂN NẶNG (KG)</label>
+                <div class="input-with-unit">
+                    <input id="can_nang" name="can_nang" value="{{ can_nang }}" placeholder="Ví dụ: 65">
+                    <span>kg</span>
+                </div>
+                {% if loi_can_nang %}<small class="error">{{ loi_can_nang }}</small>{% endif %}
+            </div>
+            <button class="btn btn-primary btn-full" type="submit">Phân tích BMI <span>→</span></button>
+        </form>
+        <p class="disclaimer">BMI chỉ là chỉ số tham khảo, không thay thế đánh giá y tế.</p>
+    </div>
+
+    <aside class="result-panel">
+        <span class="eyebrow">PHÂN TÍCH BMI</span>
+        {% if chi_so is not none %}
+            <div class="bmi-gauge {{ mau }}">
+                <span class="bmi-value">{{ "%.1f"|format(chi_so) }}</span>
+                <span class="bmi-caption">BODY MASS INDEX</span>
+            </div>
+            <div class="status-pill {{ 'success' if mau == 'xanh' else 'warning' if mau == 'vang' else 'danger' }}">
+                {{ phan_loai }}
+            </div>
+            <div class="grade-breakdown">
+                <div><span>Chiều cao</span><b>{{ chieu_cao }} cm</b></div>
+                <div><span>Cân nặng</span><b>{{ can_nang }} kg</b></div>
+                <div><span>Khoảng cân nặng tham khảo</span><b>{{ can_nang_min }}–{{ can_nang_max }} kg</b></div>
+            </div>
+        {% else %}
+            <div class="empty-symbol">⌁</div>
+            <h3>Hiểu thêm về chỉ số của bạn</h3>
+            <p>Nhập chiều cao và cân nặng để xem BMI, phân loại và khoảng cân nặng tham khảo.</p>
+        {% endif %}
+        <div class="result-hint">CÔNG THỨC <span>•</span> Cân nặng ÷ chiều cao² (m)</div>
+    </aside>
+</section>
+{% endblock %}

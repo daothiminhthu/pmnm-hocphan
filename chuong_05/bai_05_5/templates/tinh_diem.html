@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Tính điểm | CalcSpace{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">TOOL 02 / GRADE CALCULATOR</span>
+    <h1>Tính điểm <span>học phần</span></h1>
+    <p>Nhập ba đầu điểm để tính điểm tổng kết và xếp loại.</p>
+</section>
+
+<section class="workspace">
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="tool-icon orange">▤</div>
+            <div><h2>Thông tin điểm số</h2><p>Điểm từ 0 đến 10</p></div>
+        </div>
+
+        <form method="POST">
+            <div class="field">
+                <div class="label-row"><label for="cc">CHUYÊN CẦN</label><span>10%</span></div>
+                <input id="cc" name="cc" value="{{ cc }}" placeholder="0 – 10">
+                {% if loi_cc %}<small class="error">{{ loi_cc }}</small>{% endif %}
+            </div>
+            <div class="field">
+                <div class="label-row"><label for="gk">GIỮA KỲ</label><span>30%</span></div>
+                <input id="gk" name="gk" value="{{ gk }}" placeholder="0 – 10">
+                {% if loi_gk %}<small class="error">{{ loi_gk }}</small>{% endif %}
+            </div>
+            <div class="field">
+                <div class="label-row"><label for="ck">CUỐI KỲ</label><span>60%</span></div>
+                <input id="ck" name="ck" value="{{ ck }}" placeholder="0 – 10">
+                {% if loi_ck %}<small class="error">{{ loi_ck }}</small>{% endif %}
+            </div>
+            <button class="btn btn-primary btn-full" type="submit">Tính điểm tổng kết <span>→</span></button>
+        </form>
+    </div>
+
+    <aside class="result-panel">
+        <span class="eyebrow">KẾT QUẢ HỌC PHẦN</span>
+        {% if diem_hp is not none %}
+            <div class="grade-circle"><span>{{ xep_loai }}</span></div>
+            <div class="big-result">{{ "%.1f"|format(diem_hp) }}<small>/10</small></div>
+            <div class="status-pill {{ 'danger' if xep_loai == 'F' else 'success' }}">
+                Xếp loại {{ xep_loai }}
+            </div>
+            <div class="grade-breakdown">
+                <div><span>Chuyên cần</span><b>{{ cc }} × 10%</b></div>
+                <div><span>Giữa kỳ</span><b>{{ gk }} × 30%</b></div>
+                <div><span>Cuối kỳ</span><b>{{ ck }} × 60%</b></div>
+            </div>
+        {% else %}
+            <div class="empty-symbol">A+</div>
+            <h3>Bảng điểm của bạn</h3>
+            <p>Điểm tổng kết và xếp loại sẽ được hiển thị sau khi tính.</p>
+        {% endif %}
+        <div class="result-hint">CÔNG THỨC <span>•</span> CC × 10% + GK × 30% + CK × 60%</div>
+    </aside>
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CalcSpace{% endblock %}</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="nav-wrap">
+            <a class="brand" href="{{ url_for('trang_chu') }}">
+                <span class="brand-icon">C</span>
+                <span>Calc<span class="brand-light">Space</span>
+                    <small>SMART TOOLS</small>
+                </span>
+            </a>
+
+            <nav class="menu">
+                <a class="{{ 'active' if active == 'home' else '' }}"
+                   href="{{ url_for('trang_chu') }}">Tổng quan</a>
+                <a class="{{ 'active' if active == 'may_tinh' else '' }}"
+                   href="{{ url_for('may_tinh') }}">Máy tính</a>
+                <a class="{{ 'active' if active == 'tinh_diem' else '' }}"
+                   href="{{ url_for('tinh_diem') }}">Tính điểm</a>
+                <a class="{{ 'active' if active == 'bmi' else '' }}"
+                   href="{{ url_for('bmi') }}">Chỉ số BMI</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>© 2026 CalcSpace</span>
+            <span>Built with Flask &amp; Jinja2</span>
+        </div>
+    </footer>
+</body>
+</html>
