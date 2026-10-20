@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Trang chủ | MiniApp{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <span class="tag">FLASK · CHƯƠNG 5</span>
+    <h1>Chào mừng đến với MiniApp</h1>
+    <p>Chọn một bài thực hành bên dưới để bắt đầu.</p>
+</section>
+
+<section class="cards">
+    <article class="card">
+        <h2>01. Máy tính cơ bản</h2>
+        <p>Thực hành form, POST, kiểm tra dữ liệu và xử lý phép toán.</p>
+        <a href="{{ url_for('may_tinh') }}" class="button">Mở bài tập</a>
+    </article>
+
+    <article class="card">
+        <h2>02. Tính điểm học phần</h2>
+        <p>Nhập điểm, kiểm tra dữ liệu và tính điểm tổng kết.</p>
+        <a href="{{ url_for('tinh_diem') }}" class="button">Mở bài tập</a>
+    </article>
+</section>
+{% endblock %}

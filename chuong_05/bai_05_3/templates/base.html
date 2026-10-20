@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MiniApp{% endblock %}</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="navbar">
+            <a href="{{ url_for('trang_chu') }}" class="logo">MiniApp</a>
+
+            <nav>
+                <a href="{{ url_for('trang_chu') }}">Trang chủ</a>
+                <a href="{{ url_for('may_tinh') }}">Máy tính</a>
+                <a href="{{ url_for('tinh_diem') }}">Tính điểm</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        Bài thực hành Flask · Chương 5
+    </footer>
+</body>
+</html>
