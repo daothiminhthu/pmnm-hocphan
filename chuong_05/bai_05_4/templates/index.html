@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính chỉ số BMI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <section class="card">
+            <header class="heading">
+                <span class="subtitle">CHƯƠNG 5 · BÀI 4</span>
+                <h1>Tính chỉ số BMI</h1>
+                <p>Nhập chiều cao và cân nặng để kiểm tra chỉ số cơ thể.</p>
+            </header>
+
+            <form method="POST" action="{{ url_for('tinh_bmi') }}">
+                <div class="form-group">
+                    <label for="chieu_cao">Chiều cao (cm)</label>
+                    <input
+                        type="text"
+                        id="chieu_cao"
+                        name="chieu_cao"
+                        value="{{ chieu_cao }}"
+                        placeholder="Ví dụ: 170 hoặc 170,5"
+                    >
+                    {% if loi_chieu_cao %}
+                        <small class="error">{{ loi_chieu_cao }}</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="can_nang">Cân nặng (kg)</label>
+                    <input
+                        type="text"
+                        id="can_nang"
+                        name="can_nang"
+                        value="{{ can_nang }}"
+                        placeholder="Ví dụ: 65 hoặc 65,5"
+                    >
+                    {% if loi_can_nang %}
+                        <small class="error">{{ loi_can_nang }}</small>
+                    {% endif %}
+                </div>
+
+                <button type="submit">Tính chỉ số BMI</button>
+            </form>
+
+            {% if bmi is not none %}
+                <section class="result {{ mau }}">
+                    <span class="result-label">CHỈ SỐ BMI CỦA BẠN</span>
+                    <div class="bmi-number">{{ "%.1f"|format(bmi) }}</div>
+                    <div class="classification">{{ phan_loai }}</div>
+
+                    <div class="weight-range">
+                        <p>Khoảng cân nặng tương ứng với BMI 18,5–22,9:</p>
+                        <strong>{{ can_nang_min }} – {{ can_nang_max }} kg</strong>
+                    </div>
+                </section>
+            {% endif %}
+
+            <footer>
+                Bài thực hành Flask · Form và xử lý dữ liệu
+            </footer>
+        </section>
+    </main>
+</body>
+</html>

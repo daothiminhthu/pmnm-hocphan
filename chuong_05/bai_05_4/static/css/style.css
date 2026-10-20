@@ -1,0 +1,174 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    color: #243247;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.card {
+    width: 100%;
+    max-width: 500px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(30, 50, 80, 0.1);
+}
+
+.heading {
+    margin-bottom: 28px;
+}
+
+.subtitle,
+.result-label {
+    color: #16845b;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+h1 {
+    margin: 12px 0 8px;
+    font-size: 30px;
+}
+
+.heading p {
+    color: #6b7788;
+    line-height: 1.6;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d5dce5;
+    border-radius: 9px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #16845b;
+    box-shadow: 0 0 0 3px rgba(22, 132, 91, 0.1);
+}
+
+.error {
+    display: block;
+    margin-top: 7px;
+    color: #d93025;
+    font-size: 13px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: #16845b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #106b49;
+}
+
+.result {
+    margin-top: 25px;
+    padding: 22px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.result.xanh {
+    background: #e8f7ee;
+    border: 1px solid #a8dfbd;
+}
+
+.result.vang {
+    background: #fff8df;
+    border: 1px solid #f0d77b;
+}
+
+.result.do {
+    background: #fff0ef;
+    border: 1px solid #f2b7b3;
+}
+
+.bmi-number {
+    margin: 12px 0;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.xanh .bmi-number,
+.xanh .classification {
+    color: #16845b;
+}
+
+.vang .bmi-number,
+.vang .classification {
+    color: #a87900;
+}
+
+.do .bmi-number,
+.do .classification {
+    color: #d93025;
+}
+
+.classification {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.weight-range {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.weight-range p {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+footer {
+    margin-top: 26px;
+    color: #8792a2;
+    text-align: center;
+    font-size: 12px;
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+}
