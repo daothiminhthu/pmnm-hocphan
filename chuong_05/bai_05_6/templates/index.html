@@ -5,33 +5,37 @@
 {% block content %}
 
 <section class="hero">
+
     <div class="hero-content">
-        <span class="badge">FLASK AUTHENTICATION</span>
+        <span class="badge">USER MANAGEMENT SYSTEM</span>
 
         {% if session.get('user') %}
             <h1>Xin chào, <span>{{ session.get('user') }}</span>!</h1>
 
             <p>
                 Bạn đã đăng nhập thành công.
-                Chào mừng bạn quay trở lại hệ thống.
+                Hãy khám phá các chức năng của hệ thống.
             </p>
 
-            <div class="hero-actions">
-                <a href="{{ url_for('profile') }}" class="btn-primary">
-                    Xem hồ sơ →
-                </a>
-            </div>
+            <a href="{{ url_for('profile') }}" class="btn-primary">
+                Xem hồ sơ →
+            </a>
+
         {% else %}
             <h1>Chào mừng đến với <span>FlaskAuth</span></h1>
 
             <p>
-                Hệ thống thực hành đăng nhập, đăng xuất
-                và quản lý phiên người dùng bằng Flask.
+                Đăng ký tài khoản mới hoặc đăng nhập
+                để trải nghiệm hệ thống.
             </p>
 
             <div class="hero-actions">
-                <a href="{{ url_for('login') }}" class="btn-primary">
-                    Đăng nhập ngay →
+                <a href="{{ url_for('register') }}" class="btn-primary">
+                    Đăng ký ngay →
+                </a>
+
+                <a href="{{ url_for('login') }}" class="btn-secondary">
+                    Đăng nhập
                 </a>
             </div>
         {% endif %}
@@ -39,39 +43,42 @@
 
     <div class="hero-card">
         <div class="card-icon">🔐</div>
-        <h3>Secure Login</h3>
-        <p>Quản lý phiên đăng nhập bằng Flask Session.</p>
+
+        <h3>Account Security</h3>
+
+        <p>
+            Kiểm tra dữ liệu biểu mẫu bằng Flask-WTF
+            và quản lý phiên đăng nhập bằng Flask Session.
+        </p>
 
         <div class="status">
             <span class="status-dot"></span>
-
-            {% if session.get('user') %}
-                Đang đăng nhập
-            {% else %}
-                Hệ thống sẵn sàng
-            {% endif %}
+            Hệ thống sẵn sàng
         </div>
     </div>
+
 </section>
 
 <section class="feature-grid">
+
     <div class="feature-card">
         <div class="feature-icon">👤</div>
-        <h3>Tài khoản</h3>
-        <p>Kiểm tra tên đăng nhập và mật khẩu.</p>
+        <h3>Đăng ký tài khoản</h3>
+        <p>Tạo tài khoản với các trường thông tin bắt buộc.</p>
     </div>
 
     <div class="feature-card">
         <div class="feature-icon">🛡️</div>
-        <h3>Session</h3>
-        <p>Quản lý trạng thái đăng nhập của người dùng.</p>
+        <h3>Kiểm tra dữ liệu</h3>
+        <p>Hiển thị lỗi tiếng Việt khi dữ liệu không hợp lệ.</p>
     </div>
 
     <div class="feature-card">
         <div class="feature-icon">🔔</div>
-        <h3>Flash Message</h3>
-        <p>Thông báo kết quả sau mỗi thao tác.</p>
+        <h3>Thông báo</h3>
+        <p>Thông báo kết quả đăng ký và đăng nhập.</p>
     </div>
+
 </section>
 
 {% endblock %}

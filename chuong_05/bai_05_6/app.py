@@ -1,14 +1,39 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from datetime import timedelta
+
+from flask import (
+    Flask,
+    render_template,
+    redirect,
+    url_for,
+    session,
+    flash,
+    request
+)
+
+from forms import RegisterForm
+
+
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 
-# Khóa bí mật dùng cho session
-app.secret_key = "bai_tap_dang_nhap_123456"
+app.config["SECRET_KEY"] = "bai_tap_chuong_5_secret_key"
+app.config["WTF_CSRF_ENABLED"] = True
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=30)
 
-# Tài khoản mẫu
+csrf = CSRFProtect(app)
+
+
+# Tài khoản mẫu từ Bài 4
 USERS = {
-    "an": "an123456",
-    "on": "on123456"
+    "an": {
+        "password": "an123456",
+        "email": "an@gmail.com"
+    },
+    "on": {
+        "password": "on123456",
+        "email": "on@gmail.com"
+    }
 }
 
 
@@ -17,23 +42,78 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        username = form.username.data.strip()
+        email = form.email.data.strip()
+
+        # Kiểm tra tên đăng nhập đã tồn tại
+        if username in USERS:
+            flash(
+                "Tên đăng nhập đã được sử dụng.",
+                "danger"
+            )
+            return render_template(
+                "register.html",
+                form=form
+            )
+
+        # Kiểm tra email đã tồn tại
+        for user in USERS.values():
+            if user["email"].lower() == email.lower():
+                flash(
+                    "Email đã được sử dụng.",
+                    "danger"
+                )
+                return render_template(
+                    "register.html",
+                    form=form
+                )
+
+        # Kiểm tra đồng ý điều khoản
+        if not form.agree.data:
+            flash(
+                "Bạn phải đồng ý với điều khoản.",
+                "warning"
+            )
+            return render_template(
+                "register.html",
+                form=form
+            )
+
+        # Thêm tài khoản mới
+        USERS[username] = {
+            "password": form.password.data,
+            "email": email
+        }
+
+        flash("Đăng ký thành công!", "success")
+
+        return redirect(url_for("login"))
+
+    return render_template(
+        "register.html",
+        form=form
+    )
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # Nếu đã đăng nhập thì chuyển về trang chủ
     if "user" in session:
         return redirect(url_for("index"))
 
     if request.method == "POST":
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
-        remember = request.form.get("remember")
 
-        # Kiểm tra tài khoản và mật khẩu
-        if username in USERS and USERS[username] == password:
+        if (
+            username in USERS
+            and USERS[username]["password"] == password
+        ):
             session["user"] = username
-
-            # Ghi nhớ đăng nhập nếu được chọn
-            session.permanent = bool(remember)
 
             flash(
                 f"Đăng nhập thành công. Xin chào {username}!",
@@ -52,19 +132,31 @@ def login():
 
 @app.route("/profile")
 def profile():
-    # Chưa đăng nhập thì quay về trang đăng nhập
     if "user" not in session:
-        flash("Vui lòng đăng nhập để xem hồ sơ.", "warning")
+        flash(
+            "Vui lòng đăng nhập để xem hồ sơ.",
+            "warning"
+        )
         return redirect(url_for("login"))
 
-    return render_template("profile.html")
+    username = session["user"]
+    user = USERS.get(username)
+
+    if user is None:
+        session.pop("user", None)
+        flash("Tài khoản không tồn tại.", "danger")
+        return redirect(url_for("login"))
+
+    return render_template(
+        "profile.html",
+        username=username,
+        email=user["email"]
+    )
 
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    # Xóa thông tin đăng nhập
     session.pop("user", None)
-    session.permanent = False
 
     flash("Bạn đã đăng xuất.", "info")
 

@@ -5,30 +5,39 @@
 {% block content %}
 
 <section class="login-wrapper">
+
     <div class="login-info">
         <span class="badge">WELCOME BACK</span>
 
         <h1>Đăng nhập<br>vào hệ thống.</h1>
 
         <p>
-            Đăng nhập để truy cập hồ sơ cá nhân
-            và sử dụng các chức năng của hệ thống.
+            Sử dụng tài khoản đã đăng ký
+            để truy cập hồ sơ cá nhân.
         </p>
 
         <div class="login-note">
-            <strong>💡 Tài khoản thực hành</strong>
+            <strong>Tài khoản mẫu từ Bài 4</strong>
             <p>Tên đăng nhập: an</p>
             <p>Mật khẩu: an123456</p>
         </div>
     </div>
 
     <div class="login-card">
+
         <div class="login-heading">
             <h2>Đăng nhập</h2>
             <p>Vui lòng nhập thông tin tài khoản.</p>
         </div>
 
         <form method="POST" action="{{ url_for('login') }}">
+
+            <input
+    type="hidden"
+    name="csrf_token"
+    value="{{ csrf_token() }}"
+>
+
             <div class="form-group">
                 <label for="username">Tên đăng nhập</label>
 
@@ -55,21 +64,19 @@
                 >
             </div>
 
-            <label class="remember">
-                <input type="checkbox" name="remember" value="yes">
-                <span>Ghi nhớ đăng nhập</span>
-            </label>
-
             <button type="submit" class="btn-primary btn-full">
                 Đăng nhập →
             </button>
+
         </form>
 
-        <div class="demo-account">
-            <p>Tài khoản thứ hai</p>
-            <span>on / on123456</span>
+        <div class="form-footer">
+            Chưa có tài khoản?
+            <a href="{{ url_for('register') }}">Đăng ký ngay</a>
         </div>
+
     </div>
+
 </section>
 
 {% endblock %}
