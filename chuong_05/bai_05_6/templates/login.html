@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Đăng nhập | FlaskAuth{% endblock %}
+
+{% block content %}
+
+<section class="login-wrapper">
+    <div class="login-info">
+        <span class="badge">WELCOME BACK</span>
+
+        <h1>Đăng nhập<br>vào hệ thống.</h1>
+
+        <p>
+            Đăng nhập để truy cập hồ sơ cá nhân
+            và sử dụng các chức năng của hệ thống.
+        </p>
+
+        <div class="login-note">
+            <strong>💡 Tài khoản thực hành</strong>
+            <p>Tên đăng nhập: an</p>
+            <p>Mật khẩu: an123456</p>
+        </div>
+    </div>
+
+    <div class="login-card">
+        <div class="login-heading">
+            <h2>Đăng nhập</h2>
+            <p>Vui lòng nhập thông tin tài khoản.</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Nhập tên đăng nhập"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Nhập mật khẩu"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <label class="remember">
+                <input type="checkbox" name="remember" value="yes">
+                <span>Ghi nhớ đăng nhập</span>
+            </label>
+
+            <button type="submit" class="btn-primary btn-full">
+                Đăng nhập →
+            </button>
+        </form>
+
+        <div class="demo-account">
+            <p>Tài khoản thứ hai</p>
+            <span>on / on123456</span>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

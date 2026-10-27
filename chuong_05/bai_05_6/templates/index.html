@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Trang chủ | FlaskAuth{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="badge">FLASK AUTHENTICATION</span>
+
+        {% if session.get('user') %}
+            <h1>Xin chào, <span>{{ session.get('user') }}</span>!</h1>
+
+            <p>
+                Bạn đã đăng nhập thành công.
+                Chào mừng bạn quay trở lại hệ thống.
+            </p>
+
+            <div class="hero-actions">
+                <a href="{{ url_for('profile') }}" class="btn-primary">
+                    Xem hồ sơ →
+                </a>
+            </div>
+        {% else %}
+            <h1>Chào mừng đến với <span>FlaskAuth</span></h1>
+
+            <p>
+                Hệ thống thực hành đăng nhập, đăng xuất
+                và quản lý phiên người dùng bằng Flask.
+            </p>
+
+            <div class="hero-actions">
+                <a href="{{ url_for('login') }}" class="btn-primary">
+                    Đăng nhập ngay →
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="hero-card">
+        <div class="card-icon">🔐</div>
+        <h3>Secure Login</h3>
+        <p>Quản lý phiên đăng nhập bằng Flask Session.</p>
+
+        <div class="status">
+            <span class="status-dot"></span>
+
+            {% if session.get('user') %}
+                Đang đăng nhập
+            {% else %}
+                Hệ thống sẵn sàng
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="feature-grid">
+    <div class="feature-card">
+        <div class="feature-icon">👤</div>
+        <h3>Tài khoản</h3>
+        <p>Kiểm tra tên đăng nhập và mật khẩu.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Session</h3>
+        <p>Quản lý trạng thái đăng nhập của người dùng.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Flash Message</h3>
+        <p>Thông báo kết quả sau mỗi thao tác.</p>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+
+{% block title %}Hồ sơ cá nhân | FlaskAuth{% endblock %}
+
+{% block content %}
+
+<section class="profile-wrapper">
+    <div class="profile-card">
+        <div class="avatar">
+            {{ session.get('user', '?')[0]|upper }}
+        </div>
+
+        <span class="badge">USER PROFILE</span>
+
+        <h1>Hồ sơ cá nhân</h1>
+
+        <p class="profile-description">
+            Bạn đã đăng nhập và có quyền truy cập trang này.
+        </p>
+
+        <div class="profile-detail">
+            <span>Tên đăng nhập</span>
+            <strong>{{ session.get('user') }}</strong>
+        </div>
+
+        <div class="profile-detail">
+            <span>Trạng thái</span>
+            <strong class="text-success">Đang hoạt động</strong>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="btn-primary">
+            ← Quay về trang chủ
+        </a>
+    </div>
+</section>
+
+{% endblock %}
