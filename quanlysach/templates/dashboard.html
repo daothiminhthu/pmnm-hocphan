@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Tổng quan kho sách</h1>
+    <p class="sub">Toàn bộ danh mục và đầu sách đang quản lý</p>
+  </div>
+  <div class="head-actions">
+    <a class="btn" href="{{ url_for('category_new') }}">{{ icon('plus') }}Thêm danh mục</a>
+    <a class="btn primary" href="{{ url_for('book_new') }}">{{ icon('plus') }}Thêm sách</a>
+  </div>
+</div>
+
+<section class="shelf-panel" aria-label="Kệ sách">
+  {% if shelf %}
+  <div class="shelf">
+    {% for b in shelf %}
+    <a class="spine" href="{{ url_for('book_edit', book_id=b.id) }}" title="{{ b.title }}"
+       style="--c: {{ cat_color(b.category_id) }}; --h: {{ 100 + (b.id * 37) % 60 }}px; --w: {{ 26 + (b.title | length) % 5 * 5 }}px; --i: {{ loop.index0 }}">
+      <span>{{ b.title }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty on-dark">Kệ đang trống. Thêm sách để thấy chúng xuất hiện ở đây.</p>
+  {% endif %}
+  <div class="board"></div>
+</section>
+
+<div class="stats">
+  <div class="stat" style="--c: #3a4e9c"><span class="stat-ico">{{ icon('folder') }}</span><div><dt>Danh mục</dt><dd>{{ stats.categories }}</dd></div></div>
+  <div class="stat" style="--c: #a8402f"><span class="stat-ico">{{ icon('book') }}</span><div><dt>Đầu sách</dt><dd>{{ stats.books }}</dd></div></div>
+  <div class="stat" style="--c: #25666a"><span class="stat-ico">{{ icon('layers') }}</span><div><dt>Tổng số cuốn</dt><dd>{{ stats.stock }}</dd></div></div>
+  <div class="stat" style="--c: #9c7418"><span class="stat-ico">{{ icon('coin') }}</span><div><dt>Giá trị tồn kho</dt><dd class="small">{{ stats.value | vnd }}</dd></div></div>
+</div>
+
+<div class="split">
+  <section class="panel">
+    <div class="section-head"><h2>Sách theo danh mục</h2></div>
+    {% if by_category %}
+    <ul class="bars">
+      {% for c in by_category %}
+      <li style="--c: {{ cat_color(c.id) }}">
+        <div class="bar-top">
+          <a href="{{ url_for('books', category_id=c.id) }}">{{ c.name }}</a>
+          <span class="num">{{ c.books }} đầu sách · {{ c.stock }} cuốn</span>
+        </div>
+        <span class="bar"><span style="width: {{ (c.books / top * 100) if top else 0 }}%"></span></span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">Chưa có danh mục nào. <a href="{{ url_for('category_new') }}">Thêm danh mục đầu tiên</a>.</p>
+    {% endif %}
+  </section>
+
+  <div class="stack">
+    <section class="panel">
+      <div class="section-head"><h2>Sách mới thêm</h2></div>
+      {% if recent %}
+      <ul class="recent">
+        {% for b in recent %}
+        <li style="--c: {{ cat_color(b.category_id) }}">
+          <span class="tab"></span>
+          <div>
+            <a href="{{ url_for('book_edit', book_id=b.id) }}">{{ b.title }}</a>
+            <span class="muted">{{ b.author }} · {{ b.category }}</span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty">Chưa có sách nào.</p>
+      {% endif %}
+    </section>
+
+    <section class="panel">
+      <div class="section-head"><h2>Sắp hết hàng</h2></div>
+      {% if low %}
+      <ul class="recent">
+        {% for b in low %}
+        <li style="--c: {{ cat_color(b.category_id) }}">
+          <span class="tab"></span>
+          <div class="low-row">
+            <a href="{{ url_for('book_edit', book_id=b.id) }}">{{ b.title }}</a>
+            <span class="low-num">{{ b.quantity }} cuốn</span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty">Tất cả sách đều còn đủ hàng.</p>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon %}
+{% block title %}Sách · Quản lý sách{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Sách</h1>
+    <p class="sub">{{ books | length }} đầu sách{% if category_id or q %} phù hợp bộ lọc{% endif %}</p>
+  </div>
+  <a class="btn primary" href="{{ url_for('book_new', category_id=category_id) }}">{{ icon('plus') }}Thêm sách</a>
+</div>
+
+<form method="get" class="filters">
+  <select name="category_id" onchange="this.form.submit()" aria-label="Danh mục">
+    <option value="">Tất cả danh mục</option>
+    {% for c in categories %}
+    <option value="{{ c.id }}" {{ 'selected' if c.id == category_id }}>{{ c.name }}</option>
+    {% endfor %}
+  </select>
+  <label class="search">{{ icon('search') }}<input type="search" name="q" value="{{ q }}" placeholder="Tìm theo tên sách hoặc tác giả"></label>
+  <button class="btn">Tìm</button>
+  {% if category_id or q %}<a href="{{ url_for('books') }}">Xoá bộ lọc</a>{% endif %}
+</form>
+
+{% if books %}
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Tên sách</th><th>Tác giả</th><th>Danh mục</th><th class="r">Năm</th><th class="r">Giá</th><th class="r">Số lượng</th><th class="r">Thao tác</th></tr>
+  </thead>
+  <tbody>
+  {% for b in books %}
+    <tr>
+      <td><span class="tab" style="--c: {{ cat_color(b.category_id) }}"></span><span class="strong">{{ b.title }}</span></td>
+      <td>{{ b.author }}</td>
+      <td><span class="pill" style="--c: {{ cat_color(b.category_id) }}">{{ b.category }}</span></td>
+      <td class="r">{{ b.year or '' }}</td>
+      <td class="r">{{ b.price | vnd }}</td>
+      <td class="r {{ 'low' if b.quantity <= 5 }}">{{ b.quantity }}</td>
+      <td class="r">
+        <div class="btn-group">
+          <a class="icon-btn" href="{{ url_for('book_edit', book_id=b.id) }}">{{ icon('edit') }}<span>Sửa</span></a>
+          <form method="post" action="{{ url_for('book_delete', book_id=b.id) }}" data-confirm="Xoá sách “{{ b.title }}”?">
+            <button class="icon-btn danger">{{ icon('trash') }}<span>Xoá</span></button>
+          </form>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% elif category_id or q %}
+<p class="empty panel">Không tìm thấy sách phù hợp.</p>
+{% else %}
+<p class="empty panel">Chưa có sách nào. <a href="{{ url_for('book_new') }}">Thêm sách đầu tiên</a>.</p>
+{% endif %}
+{% endblock %}

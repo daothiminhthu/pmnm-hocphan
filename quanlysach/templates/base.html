@@ -1,0 +1,61 @@
+{% from "_macros.html" import icon %}
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Quản lý sách{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <aside class="side">
+    <a class="brand" href="{{ url_for('dashboard') }}">
+      <span class="logo"><i></i><i></i><i></i></span>
+      <span>Quản lý sách</span>
+    </a>
+    <nav>
+      <a href="{{ url_for('dashboard') }}" class="{{ 'on' if request.endpoint == 'dashboard' }}">{{ icon('grid') }}Dashboard</a>
+      <a href="{{ url_for('categories') }}" class="{{ 'on' if request.endpoint and request.endpoint.startswith('categor') }}">{{ icon('folder') }}Danh mục</a>
+      <a href="{{ url_for('books') }}" class="{{ 'on' if request.endpoint and request.endpoint.startswith('book') }}">{{ icon('book') }}Sách</a>
+    </nav>
+  </aside>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p class="flash {{ category }}" role="status">{{ message }}</p>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <dialog id="confirm">
+    <form method="dialog">
+      <h3>Xác nhận xoá</h3>
+      <p id="confirm-msg"></p>
+      <div class="dialog-actions">
+        <button class="btn" value="cancel">Huỷ</button>
+        <button class="btn danger-solid" value="ok">Xoá</button>
+      </div>
+    </form>
+  </dialog>
+  <script>
+    (() => {
+      const dlg = document.getElementById("confirm");
+      const msg = document.getElementById("confirm-msg");
+      document.addEventListener("submit", e => {
+        const form = e.target;
+        if (!form.dataset.confirm) return;
+        e.preventDefault();
+        msg.textContent = form.dataset.confirm;
+        dlg.returnValue = "";
+        dlg.addEventListener("close", () => { if (dlg.returnValue === "ok") form.submit(); }, { once: true });
+        dlg.showModal();
+      });
+    })();
+  </script>
+</body>
+</html>

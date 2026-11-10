@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icon %}
+{% block title %}Danh mục · Quản lý sách{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Danh mục sách</h1>
+    <p class="sub">{{ categories | length }} danh mục</p>
+  </div>
+  <a class="btn primary" href="{{ url_for('category_new') }}">{{ icon('plus') }}Thêm danh mục</a>
+</div>
+
+{% if categories %}
+<div class="cards">
+  {% for c in categories %}
+  <article class="card" style="--c: {{ cat_color(c.id) }}">
+    <h3><a href="{{ url_for('books', category_id=c.id) }}">{{ c.name }}</a></h3>
+    <p class="desc">{{ c.description or 'Chưa có mô tả' }}</p>
+    <p class="count"><strong>{{ c.books }}</strong> đầu sách</p>
+    <div class="card-actions">
+      <a class="icon-btn" href="{{ url_for('books', category_id=c.id) }}">{{ icon('book') }}<span>Xem sách</span></a>
+      <a class="icon-btn" href="{{ url_for('category_edit', category_id=c.id) }}">{{ icon('edit') }}<span>Sửa</span></a>
+      <form method="post" action="{{ url_for('category_delete', category_id=c.id) }}"
+            data-confirm="Xoá danh mục “{{ c.name }}”{% if c.books %} cùng {{ c.books }} đầu sách trong đó{% endif %}?">
+        <button class="icon-btn danger">{{ icon('trash') }}<span>Xoá</span></button>
+      </form>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<p class="empty panel">Chưa có danh mục nào. <a href="{{ url_for('category_new') }}">Thêm danh mục đầu tiên</a>.</p>
+{% endif %}
+{% endblock %}

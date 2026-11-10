@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Sửa' if book else 'Thêm' }} sách · Quản lý sách{% endblock %}
+{% block content %}
+<h1>{{ 'Sửa sách' if book else 'Thêm sách' }}</h1>
+
+{% if not categories %}
+<p class="empty">Cần có ít nhất một danh mục trước khi thêm sách. <a href="{{ url_for('category_new') }}">Thêm danh mục</a>.</p>
+{% else %}
+<form method="post" class="form panel">
+  <label>Tên sách
+    <input name="title" value="{{ form.get('title', '') }}" required autofocus>
+  </label>
+  <label>Tác giả
+    <input name="author" value="{{ form.get('author', '') }}" required>
+  </label>
+  <label>Danh mục
+    <select name="category_id" required>
+      <option value="">Chọn danh mục</option>
+      {% for c in categories %}
+      <option value="{{ c.id }}" {{ 'selected' if form.get('category_id') | string == c.id | string }}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <div class="row">
+    <label>Năm xuất bản
+      <input name="year" type="number" min="0" value="{{ form.get('year', '') }}">
+    </label>
+    <label>Giá (₫)
+      <input name="price" type="number" min="0" step="1000" value="{{ form.get('price', 0) }}">
+    </label>
+    <label>Số lượng
+      <input name="quantity" type="number" min="0" value="{{ form.get('quantity', 0) }}">
+    </label>
+  </div>
+  <div class="form-actions">
+    <button class="btn primary">Lưu sách</button>
+    <a href="{{ url_for('books') }}">Huỷ</a>
+  </div>
+</form>
+{% endif %}
+{% endblock %}
